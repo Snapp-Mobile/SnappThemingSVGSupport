@@ -1,6 +1,6 @@
 # SnappThemingSVGSupport
 
-A library to provide support for SVG asset handling in [`SnappTheming`](https://ios-theming.snappmobile.io/documentation/snapptheming)
+A library to provide support for SVG asset handling in [`SnappTheming`](https://github.com/Snapp-Mobile/SnappTheming)
 
 ## Overview
 
