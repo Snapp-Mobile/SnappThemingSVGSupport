@@ -1,6 +1,6 @@
 # ``SnappThemingSVGSupport``
 
-A library to provide support for SVG asset handling in `SnappTheming`
+A library that enables support for SVG asset handling in `SnappTheming`
 
 ## Overview
 

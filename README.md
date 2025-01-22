@@ -1,12 +1,10 @@
 # SnappThemingSVGSupport
 
-A library to provide support for SVG asset handling in `SnappTheming`
-
-## Overview
-
 <p align="center">
     <img src="Sources/SnappThemingSVGSupport/SnappThemingSVGSupport.docc/Resources/logo%402x.png">
 <p/>
+
+`SnappThemingSVGSupport` is a library that enables support for SVG asset handling in `SnappTheming`
 
 Enabling the SVG support is as easy as adding one line to your codebase.
 
