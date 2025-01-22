@@ -7,17 +7,17 @@
 
 import Foundation
 import OSLog
+import SVGKit
 import SnappTheming
 import UIKit
 import UniformTypeIdentifiers
-import SVGKit
 
 /// Extension for `SnappThemingExternalImageProcessorProtocol` to provide a default implementation for SVG processing.
-public extension SnappThemingExternalImageProcessorProtocol where Self == SnappThemingSVGSupportSVGProcessor {
+extension SnappThemingExternalImageProcessorProtocol where Self == SnappThemingSVGSupportSVGProcessor {
     /// Provides a static instance of `SnappThemingSVGSupportSVGProcessor`.
     ///
     /// - Returns: A new instance of `SnappThemingSVGSupportSVGProcessor` to handle `.svg` image processing.
-    static var svg: SnappThemingSVGSupportSVGProcessor { SnappThemingSVGSupportSVGProcessor() }
+    public static var svg: SnappThemingSVGSupportSVGProcessor { SnappThemingSVGSupportSVGProcessor() }
 }
 
 /// A processor for handling SVG image data, conforming to `SnappThemingExternalImageProcessorProtocol`.

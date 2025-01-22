@@ -7,8 +7,8 @@
 
 import Foundation
 import OSLog
-import UIKit
 import SVGKit
+import UIKit
 
 /// A utility class for converts SVG data into a `UIImage`.
 class SnappThemingSVGSupportImageConverter {
