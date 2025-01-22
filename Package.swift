@@ -7,17 +7,17 @@ let package = Package(
     name: "SnappThemingSVGSupport",
     platforms: [
         .iOS(.v16),
-        .macOS(.v12)
+        .macOS(.v12),
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "SnappThemingSVGSupport",
-            targets: ["SnappThemingSVGSupport"]),
+            targets: ["SnappThemingSVGSupport"])
     ],
     dependencies: [
         .package(url: "https://github.com/SVGKit/SVGKit.git", from: "3.0.0"),
-        .package(url: "https://github.com/Snapp-Mobile/SnappTheming", from: "0.0.4")
+        .package(url: "https://github.com/Snapp-Mobile/SnappTheming", from: "0.0.4"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -26,8 +26,24 @@ let package = Package(
             name: "SnappThemingSVGSupport",
             dependencies: [
                 "SVGKit",
-                "SnappTheming"
-            ]),
+                "SnappTheming",
+            ],
+            plugins: [
+                .plugin(name: "SwiftFormatPlugin")
+            ]
+        ),
+        .testTarget(
+            name: "SnappThemingSVGSupportTests",
+            dependencies: [
+                "SVGKit",
+                "SnappTheming",
+                "SnappThemingSVGSupport",
+            ],
+            resources: [
+                .copy("Resources/images.json")
+            ]
+        ),
+        .plugin(name: "SwiftFormatPlugin", capability: .buildTool(), path: "Plugins/SwiftFormatPlugin"),
 
     ]
 )
