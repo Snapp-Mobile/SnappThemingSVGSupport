@@ -37,6 +37,10 @@ let package = Package(
             dependencies: [
                 "SVGKit",
                 "SnappTheming",
+                "SnappThemingSVGSupport",
+            ],
+            resources: [
+                .copy("Resources/images.json")
             ]
         ),
         .plugin(name: "SwiftFormatPlugin", capability: .buildTool(), path: "Plugins/SwiftFormatPlugin"),
