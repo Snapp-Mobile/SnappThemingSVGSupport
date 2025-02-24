@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "2BE49DF9-D17D-425E-A324-F3084D7BF21A",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "SnappThemingSVGSupport",
+          "name" : "SnappThemingSVGSupport"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SnappThemingSVGSupportTests",
+        "name" : "SnappThemingSVGSupportTests"
+      }
+    }
+  ],
+  "version" : 1
+}
