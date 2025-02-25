@@ -1,13 +1,15 @@
 #!/bin/bash
 
 # Environment variables
-PACKAGE_NAME="SnappThemingSVGSupport"
-SOURCE_PATH="$PACKAGE_NAME/Sources"
-OUTPUT_FILE="pr_coverage_summary.txt"
+PACKAGE_NAME=${PACKAGE_NAME:-"SnappThemingSVGSupport"}
+SOURCE_PATH=${SOURCE_PATH:-"$PACKAGE_NAME/Sources"}
+OUTPUT_FILE=${COVERAGE_SUMMARY_FILE:-"pr_coverage_summary.txt"}
 DECIMAL_PLACES=6
 
-# Get the path to the coverage report
-CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
+# Use CODECOV_PATH from environment if provided, otherwise get it
+if [ -z "$CODECOV_PATH" ]; then
+  CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
+fi
 echo "Using coverage report at: $CODECOV_PATH"
 
 # Extract all line coverage data for files containing SOURCE_PATH
@@ -37,7 +39,7 @@ fi
 average_coverage_rounded=$(echo "$average_coverage" | awk '{print int($1 * 100 + 0.5) / 100}')
 average_coverage_with_percentage="${average_coverage_rounded}%"
 
-# Save to pr_coverage_summary.txt
+# Save to output file
 cat <<EOF > "$OUTPUT_FILE"
 | ID | Name | Executable Lines | Coverage |
 |----|------|-----------------:|---------:|
