@@ -1,11 +1,10 @@
 #!/bin/bash
 
 # Environment variables
-PACKAGE_NAME="SnappThemingSVGSpport"
+PACKAGE_NAME="SnappThemingSVGSupport"
 SOURCE_PATH="$PACKAGE_NAME/Sources"
 OUTPUT_FILE="pr_coverage_summary.txt"
 DECIMAL_PLACES=6
-DISPLAY_PLACES=2
 
 # Get the path to the coverage report
 CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
