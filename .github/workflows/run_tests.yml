@@ -13,34 +13,34 @@ env:
 
 on:
     push:
-    branches: [ "main" ]
-    pull_request:
-    branches: [ "main" ]
+        branches: [ "main" ]
+        pull_request:
+        branches: [ "main" ]
 
 jobs:
     build:
-    runs-on: macos-latest
+        runs-on: macos-latest
 
-    steps:
-    - uses: actions/checkout@v4
+        steps:
+        - uses: actions/checkout@v4
 
-    - name: List Xcode Installations
-      run: sudo ls -1 /Applications | grep "Xcode"
+        - name: List Xcode Installations
+          run: sudo ls -1 /Applications | grep "Xcode"
 
-    - name: Select Xcode
-      run: sudo xcode-select -s ${{ env.XCODE_PATH }}
+        - name: Select Xcode
+          run: sudo xcode-select -s ${{ env.XCODE_PATH }}
 
-    - name: Run Swift Tests with Coverage
-      run: |
-        swift test --enable-swift-testing --enable-code-coverage
-        CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
-        echo "CODECOV_PATH=${CODECOV_PATH}" >> $GITHUB_ENV
+        - name: Run Swift Tests with Coverage
+          run: |
+            swift test --enable-swift-testing --enable-code-coverage
+            CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
+            echo "CODECOV_PATH=${CODECOV_PATH}" >> $GITHUB_ENV
 
-    - name: Run Coverage Extraction Script
-      run: bash ${{ env.EXTRACT_COVERAGE }}
+        - name: Run Coverage Extraction Script
+          run: bash ${{ env.EXTRACT_COVERAGE }}
 
-    - name: Comment on Pull Request
-      if: github.event_name == 'pull_request'
-      uses: actions/github-script@v6
-      with:
-        script-path: ${{ env.CREATE_COMMENT }}
+        - name: Comment on Pull Request
+          if: github.event_name == 'pull_request'
+          uses: actions/github-script@v6
+          with:
+            script-path: ${{ env.CREATE_COMMENT }}
