@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "A7A2AE7E-6FA3-49EF-A068-BB0BC519E557",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "SnappThemingSVGSupport",
+          "name" : "SnappThemingSVGSupport"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SnappThemingSVGSupportTests",
+        "name" : "SnappThemingSVGSupportTests"
+      }
+    }
+  ],
+  "version" : 1
+}

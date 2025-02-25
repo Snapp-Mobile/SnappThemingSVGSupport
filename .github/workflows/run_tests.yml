@@ -3,10 +3,13 @@
 
  name: Package Test
  env:
-   DESTINATION: 'platform=macOS,variant=Mac Catalyst,name=My Mac'
-   SCHEME: 'SnappThemingSVGSupport'
-   WORKSPACE_PATH: '.swiftpm/xcode/package.xcworkspace'
+   EXTRACT_COVERAGE: '.github/scripts/extract_coverage.sh'
    COVERAGE_REPORT_PATH: './coverage/coverage.xcresult'
+   XCODE_VERSION: 'Xcode_16.2.app'
+   XCODE_PATH: '/Applications/Xcode_16.2.app/Contents/Developer'
+   COVERAGE_SUMMARY_FILE: 'pr_coverage_summary.txt'
+   BOT_COMMENT_HEADER: '### 🛡️ Code Coverage Report'
+
  on:
    push:
      branches: [ "main" ]
@@ -20,19 +23,21 @@
 
      steps:
      - uses: actions/checkout@v4
-     - name: List Xcode installations
+
+     - name: List Xcode Installations
        run: sudo ls -1 /Applications | grep "Xcode"
-     - name: Select Xcode 16.2
-       run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
+
+     - name: Select Xcode
+       run: sudo xcode-select -s ${{ env.XCODE_PATH }}
 
      - name: Run Swift Tests with Coverage
        run: |
          swift test --enable-swift-testing --enable-code-coverage
          CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
-         echo $CODECOV_PATH
+         echo "CODECOV_PATH=${CODECOV_PATH}" >> $GITHUB_ENV
 
      - name: Run Coverage Extraction Script
-       run: bash .github/scripts/extract_coverage.sh
+       run: bash ${{ env.EXTRACT_COVERAGE }}
 
      - name: Comment on Pull Request
        if: github.event_name == 'pull_request'
@@ -40,10 +45,10 @@
        with:
          script: |
             const fs = require('fs');
-            const coverageOutput = fs.readFileSync('pr_coverage_summary.txt', 'utf8');
+            const coverageOutput = fs.readFileSync('${{ env.COVERAGE_SUMMARY_FILE }}', 'utf8');
 
             const newComment = `
-            ### 🛡️ Code Coverage Report
+            ${{ env.BOT_COMMENT_HEADER }}
             
             ${coverageOutput}
 
@@ -59,7 +64,7 @@
 
             // Identify and delete previous bot comments
             const botComments = comments.data.filter(comment =>
-              comment.body.includes("### 🛡️ Code Coverage Report")
+              comment.body.includes("${{ env.BOT_COMMENT_HEADER }}")
             );
 
             for (const botComment of botComments) {
