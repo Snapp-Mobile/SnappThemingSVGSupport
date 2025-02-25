@@ -2,6 +2,7 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
 
 name: Package Test
+
 env:
     EXTRACT_COVERAGE: '.github/scripts/extract_coverage.sh'
     CREATE_COMMENT: '.github/scripts/create_pr_comment.js'
@@ -12,35 +13,35 @@ env:
     BOT_COMMENT_HEADER: '### 🛡️ Code Coverage Report'
 
 on:
-    push:
-        branches: [ "main" ]
-        pull_request:
-        branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-    build:
-        runs-on: macos-latest
+  build:
+    runs-on: macos-latest
 
-        steps:
-        - uses: actions/checkout@v4
+    steps:
+    - uses: actions/checkout@v4
 
-        - name: List Xcode Installations
-          run: sudo ls -1 /Applications | grep "Xcode"
+    - name: List Xcode Installations
+      run: sudo ls -1 /Applications | grep "Xcode"
 
-        - name: Select Xcode
-          run: sudo xcode-select -s ${{ env.XCODE_PATH }}
+    - name: Select Xcode
+      run: sudo xcode-select -s ${{ env.XCODE_PATH }}
 
-        - name: Run Swift Tests with Coverage
-          run: |
-            swift test --enable-swift-testing --enable-code-coverage
-            CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
-            echo "CODECOV_PATH=${CODECOV_PATH}" >> $GITHUB_ENV
+    - name: Run Swift Tests with Coverage
+      run: |
+        swift test --enable-swift-testing --enable-code-coverage
+        CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
+        echo "CODECOV_PATH=${CODECOV_PATH}" >> $GITHUB_ENV
 
-        - name: Run Coverage Extraction Script
-          run: bash ${{ env.EXTRACT_COVERAGE }}
+    - name: Run Coverage Extraction Script
+      run: bash ${{ env.EXTRACT_COVERAGE }}
 
-        - name: Comment on Pull Request
-          if: github.event_name == 'pull_request'
-          uses: actions/github-script@v6
-          with:
-            script-path: ${{ env.CREATE_COMMENT }}
+    - name: Comment on Pull Request
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script-path: ${{ env.CREATE_COMMENT }}
