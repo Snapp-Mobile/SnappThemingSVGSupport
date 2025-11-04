@@ -1,5 +1,4 @@
 // swift-tools-version: 6.0
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -10,18 +9,17 @@ let package = Package(
         .macOS(.v13),
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "SnappThemingSVGSupport",
-            targets: ["SnappThemingSVGSupport"])
+            targets: ["SnappThemingSVGSupport"]
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/SVGKit/SVGKit.git", from: "3.0.0"),
         .package(url: "https://github.com/Snapp-Mobile/SnappTheming", from: "0.1.2"),
+        .package(url: "https://github.com/Snapp-Mobile/SwiftFormatLintPlugin.git", exact: "1.0.4"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "SnappThemingSVGSupport",
             dependencies: [
@@ -29,7 +27,7 @@ let package = Package(
                 "SnappTheming",
             ],
             plugins: [
-                .plugin(name: "SnappThemingSVGSupportSwiftFormatPlugin")
+                .plugin(name: "Lint", package: "SwiftFormatLintPlugin")
             ]
         ),
         .testTarget(
@@ -42,11 +40,6 @@ let package = Package(
             resources: [
                 .copy("Resources/images.json")
             ]
-        ),
-        .plugin(
-            name: "SnappThemingSVGSupportSwiftFormatPlugin",
-            capability: .buildTool(),
-            path: "Plugins/SnappThemingSVGSupportSwiftFormatPlugin"
         ),
 
     ]
