@@ -17,19 +17,22 @@ struct SVGProcessorTests {
 
     @Test
     func testSVGProcessorFail() {
-        #expect(sut.process(Data(), of: .png) == nil)
-        #expect(sut.process(Data(), of: .jpeg) == nil)
-        #expect(sut.process(Data(), of: .pdf) == nil)
-        #expect(sut.process(Data(), of: .gif) == nil)
+        let object = SnappThemingImageObject(data: Data())
+        #expect(sut.process(object, of: .png) == nil)
+        #expect(sut.process(object, of: .jpeg) == nil)
+        #expect(sut.process(object, of: .pdf) == nil)
+        #expect(sut.process(object, of: .gif) == nil)
     }
 
     @Test
     func testSVGProcessorFallback() throws {
         let emptyStringData = try #require("".data(using: .utf8))
         let fallbackImage: SnappThemingImage = try #require(.system("exclamationmark.triangle"))
+        let emptyStringDataObject = SnappThemingImageObject(data: emptyStringData)
 
-        let emptyStringDataImage = try #require(sut.process(emptyStringData, of: .svg))
-        let emptyDataImage = try #require(sut.process(Data(), of: .svg))
+        let emptyStringDataImage = try #require(sut.process(emptyStringDataObject, of: .svg))
+        let emptyDataObject = SnappThemingImageObject(data: Data())
+        let emptyDataImage = try #require(sut.process(emptyDataObject, of: .svg))
 
         #if canImport(UIKit)
             #expect(emptyStringDataImage == fallbackImage)
@@ -44,7 +47,8 @@ struct SVGProcessorTests {
     @Test
     func testSVGProcessorExpectedImage() throws {
         let svgData = try #require(svgIconString.data(using: .utf8))
-        let processedIcon = try #require(sut.process(svgData, of: .svg))
+        let svgDataObject = SnappThemingImageObject(data: svgData)
+        let processedIcon = try #require(sut.process(svgDataObject, of: .svg))
 
         #expect(processedIcon.size.width == 24)
         #expect(processedIcon.size.height == 24)

@@ -13,48 +13,54 @@ import Testing
 
 @Suite
 struct ImageConverterTests {
+    private let converter = SnappThemingSVGSupportImageConverter()
+
     @Test
     func testConverterSuccessfulConversionExpectedImage() throws {
         let expectedImageData = try #require(svgIconString.data(using: .utf8))
-        let converter = SnappThemingSVGSupportImageConverter(data: expectedImageData)
+        let object = SnappThemingImageObject(data: expectedImageData)
+        let image = converter.convert(object)
 
-        #expect(converter.image.size == CGSize(width: 24, height: 24))
+        #expect(image.size == CGSize(width: 24, height: 24))
     }
 
     @Test
     func testConverterSVGImageFailedFallbackImage() throws {
         let expectedImageData = try #require(svgIconString.data(using: .utf8))
-        let converter = SnappThemingSVGSupportImageConverter(data: expectedImageData, svgImageType: MockSVGKImage.self)
+        let object = SnappThemingImageObject(data: expectedImageData)
+        let image = converter.convert(object, ofType: MockSVGKImage.self)
         let fallbackImage: SnappThemingImage = try #require(.system("exclamationmark.triangle"))
 
-        #expect(converter.image.size != CGSize(width: 24, height: 24))
+        #expect(image.size != CGSize(width: 24, height: 24))
         #if canImport(UIKit)
-            #expect(converter.image == fallbackImage)
+            #expect(image == fallbackImage)
         #elseif canImport(AppKit)
-            #expect(converter.image.tiffRepresentation == fallbackImage.tiffRepresentation)
+            #expect(image.tiffRepresentation == fallbackImage.tiffRepresentation)
         #endif
     }
 
     @Test
     func testConverterEmptyDataFallbackImage() async throws {
-        let converter = SnappThemingSVGSupportImageConverter(data: Data())
+        let object = SnappThemingImageObject(data: Data())
+        let image = converter.convert(object)
         let fallbackImage: SnappThemingImage = try #require(.system("exclamationmark.triangle"))
         #if canImport(UIKit)
-            #expect(converter.image == fallbackImage)
+            #expect(image == fallbackImage)
         #elseif canImport(AppKit)
-            #expect(converter.image.tiffRepresentation == fallbackImage.tiffRepresentation)
+            #expect(image.tiffRepresentation == fallbackImage.tiffRepresentation)
         #endif
     }
 
     @Test
     func testConverterEmptyDataAndBrokenFallbackImage() async throws {
-        let converter = SnappThemingSVGSupportImageConverter(data: Data(), fallbackImageName: "")
+        let object = SnappThemingImageObject(data: Data())
+        let image = converter.convert(object, withFallback: "")
         let fallbackImage: SnappThemingImage = try #require(.system("exclamationmark.triangle"))
         #if canImport(UIKit)
-            #expect(converter.image == SnappThemingImage())
+            #expect(image == SnappThemingImage())
         #elseif canImport(AppKit)
-            #expect(converter.image.tiffRepresentation != fallbackImage.tiffRepresentation)
-            #expect(converter.image.tiffRepresentation == nil)
+            #expect(image.tiffRepresentation != fallbackImage.tiffRepresentation)
+            #expect(image.tiffRepresentation == nil)
         #endif
     }
 }

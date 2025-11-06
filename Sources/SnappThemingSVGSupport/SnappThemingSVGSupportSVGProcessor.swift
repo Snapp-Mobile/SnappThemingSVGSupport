@@ -20,6 +20,8 @@ extension SnappThemingExternalImageProcessorProtocol where Self == SnappThemingS
 
 /// A processor for handling SVG image data, conforming to `SnappThemingExternalImageProcessorProtocol`.
 public struct SnappThemingSVGSupportSVGProcessor: SnappThemingExternalImageProcessorProtocol {
+    private let converter: SnappThemingSVGSupportImageConverter
+
     /// Processes the provided image data and type and converts it into a `SnappThemingImage` if the type is `.svg`.
     ///
     /// - Parameter data: Image `Data`.
@@ -31,17 +33,19 @@ public struct SnappThemingSVGSupportSVGProcessor: SnappThemingExternalImageProce
     ///
     /// - Note: This method specifically handles `.svg` type. If the type does not match, the method returns `nil`.
     /// - Warning: Ensure that the `data` is valid SVG data to avoid potential rendering issues.
-    public func process(_ data: Data, of type: UTType) -> SnappThemingImage? {
+    public func process(_ object: SnappThemingImageObject, of type: UTType) -> SnappThemingImage? {
         guard type == .svg else {
             os_log(.error, "Invalid type provided: %{public}@. Only .svg type is supported.", "\(type)")
             return nil
         }
 
-        return SnappThemingSVGSupportImageConverter(data: data).image
+        return converter.convert(object)
     }
 
     /// Initializes the `SnappThemingSVGSupportSVGProcessor`.
     ///
     /// This default initializer is used to create instances of the processor for processing SVG data.
-    public init() {}
+    public init() {
+        converter = SnappThemingSVGSupportImageConverter()
+    }
 }
