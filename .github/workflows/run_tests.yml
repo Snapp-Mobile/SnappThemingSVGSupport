@@ -8,4 +8,7 @@ on:
 
 jobs:
   coverage:
-    uses: Snapp-Mobile/swift-coverage-action/.github/workflows/swift-coverage.yml@main
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Snapp-Mobile/swift-coverage-action@v1.0.1
