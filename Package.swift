@@ -12,7 +12,11 @@ let package = Package(
         .library(
             name: "SnappThemingSVGSupport",
             targets: ["SnappThemingSVGSupport"]
-        )
+        ),
+        .executable(
+            name: "ExampleApp",
+            targets: ["ExampleApp"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/SVGKit/SVGKit.git", from: "3.0.0"),
@@ -41,6 +45,17 @@ let package = Package(
                 .copy("Resources/images.json")
             ]
         ),
-
+        .executableTarget(
+            name: "ExampleApp",
+            dependencies: [
+                "SnappThemingSVGSupport",
+                "SnappTheming",
+            ],
+            resources: [
+                .copy("ExampleApp/Resources/light.json"),
+                .copy("ExampleApp/Resources/dark.json"),
+                .copy("ExampleApp/Resources/pink.json"),
+            ]
+        ),
     ]
 )
