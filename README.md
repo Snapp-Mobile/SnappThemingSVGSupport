@@ -9,7 +9,8 @@
     <a href="https://img.shields.io/badge/swift--tools--version-6.0-red" target="_blank"><img src="https://img.shields.io/badge/swift--tools--version-6.0-red" alt="Swift Tools Version 6.0"></a>
     <a href="https://img.shields.io/badge/Platforms-_iOS_|_macOS_|_tvOS_-green" target="_blank"><img src="https://img.shields.io/badge/Platforms-_iOS_|_macOS_|_tvOS_-green" alt="Supported Platforms"></a>
 <p/>
-`SnappThemingSVGSupport` is a library that enables support for SVG asset handling in `SnappTheming`
+    
+This library enables support for SVG asset handling in **SnappTheming**
 
 Enabling the SVG support is as easy as adding one line to your codebase.
 
