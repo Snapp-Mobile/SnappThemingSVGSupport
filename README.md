@@ -1,7 +1,7 @@
 # SnappThemingSVGSupport
 
 <p align="center">
-    <img src="Sources/SnappThemingSVGSupport/SnappThemingSVGSupport.docc/Resources/logo%402x.png">
+    <img src="Sources/SnappThemingSVGSupport/SnappThemingSVGSupport.docc/Resources/logo.png">
     <br /><br />
     <a href="https://github.com/Snapp-Mobile/SnappThemingSVGSupport/tags" target="_blank"><img src="https://img.shields.io/github/v/tag/Snapp-Mobile/SnappThemingSVGSupport?color=yellow&label=version" alt="Latest Version"></a>
     <a href="https://github.com/Snapp-Mobile/SnappThemingSVGSupport/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Snapp-Mobile/SnappThemingSVGSupport" alt="License Badge"></a>
