@@ -31,6 +31,10 @@ Build infrastructure improvements and example application.
 - Migrated to external SwiftFormatLintPlugin for code linting
 - Refactored CI/CD workflow using swift-coverage-action
 
+### Fixed
+- [#12](https://github.com/Snapp-Mobile/SnappThemingSVGSupport/issues/12)
+  Proper SVG source handling with URL context for theme switching
+
 ### Removed
 - Internal build plugin in favor of external dependencies
 
