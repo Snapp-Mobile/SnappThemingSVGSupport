@@ -1,21 +1,28 @@
 # ``SnappThemingSVGSupport``
 
-A library that enables support for SVG asset handling in `SnappTheming`
+@Metadata {
+    @PageImage(purpose: icon, source:"logo")
+    @PageColor(gray)
+}
+
+Enables support for SVG asset handling in `SnappTheming`
 
 ## Overview
 
-![SnappThemingSVGSupport logo](logo.png)
+Enabling the SVG support is as easy as adding one line to your codebase. It extends [SnppTheming](https://github.com/Snapp-Mobile/SnappTheming) functionality.
 
-Enabling the SVG support is as easy as adding one line to your codebase.
-
-See the example below
+## Usage
 
 ```swift
 import SnappTheming
 import SnappThemingSVGSupport
 
 // in the app delegate or SwiftUI Application init
+let svg: SnappThemingSVGSupportSVGProcessor = .svg
 SnappThemingImageProcessorsRegistry.shared.register(.svg)
+
+// in case it needed processor can be unregistered
+SnappThemingImageProcessorsRegistry.shared.unregister(SnappThemingSVGSupportSVGProcessor.self)
 ```
 
 [Clone on GitHub](https://github.com/Snapp-Mobile/SnappThemingSVGSupport)
