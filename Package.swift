@@ -20,7 +20,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/SVGKit/SVGKit.git", from: "3.0.0"),
-        .package(url: "https://github.com/Snapp-Mobile/SnappTheming", branch: "next"),
+        .package(url: "https://github.com/Snapp-Mobile/SnappTheming", exact: "0.1.3"),
         .package(url: "https://github.com/Snapp-Mobile/SwiftFormatLintPlugin.git", exact: "1.0.4"),
     ],
     targets: [
