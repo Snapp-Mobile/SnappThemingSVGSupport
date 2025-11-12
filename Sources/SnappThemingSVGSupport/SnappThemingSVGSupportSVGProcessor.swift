@@ -20,28 +20,48 @@ extension SnappThemingExternalImageProcessorProtocol where Self == SnappThemingS
 
 /// A processor for handling SVG image data, conforming to `SnappThemingExternalImageProcessorProtocol`.
 public struct SnappThemingSVGSupportSVGProcessor: SnappThemingExternalImageProcessorProtocol {
-    /// Processes the provided image data and type and converts it into a `SnappThemingImage` if the type is `.svg`.
+    private let converter: SnappThemingSVGSupportImageConverter
+
+    /// Processes image data and converts it to a `SnappThemingImage` for SVG types.
     ///
-    /// - Parameter data: Image `Data`.
-    /// - Parameter type: Image `UTType`.
-    /// - Returns: A `SnappThemingImage` if the processing and conversion are successful; otherwise, `nil`.
+    /// This method handles SVG image conversion by delegating to the internal converter.
+    /// For non-SVG types, the method returns `nil` and logs an error.
     ///
-    /// - On **iOS, iPadOS, tvOS, watchOS**, and **visionOS**, `SnappThemingImage` is an alias for `UIImage`.
-    /// - On **macOS**, `SnappThemingImage` is an alias for `NSImage`.
+    /// - Parameters:
+    ///   - object: The image object containing the SVG data to process.
+    ///   - type: The uniform type identifier for the image. Only `.svg` is supported.
     ///
-    /// - Note: This method specifically handles `.svg` type. If the type does not match, the method returns `nil`.
-    /// - Warning: Ensure that the `data` is valid SVG data to avoid potential rendering issues.
-    public func process(_ data: Data, of type: UTType) -> SnappThemingImage? {
+    /// - Returns: A `SnappThemingImage` if the input is valid SVG data; otherwise, `nil`.
+    ///
+    /// ## Platform Availability
+    /// - On **iOS**, **iPadOS**, **tvOS**, **watchOS**, and **visionOS**: `SnappThemingImage` is a type alias for `UIImage`.
+    /// - On **macOS**: `SnappThemingImage` is a type alias for `NSImage`.
+    ///
+    /// ## Supported Types
+    /// Only `.svg` type is supported. Providing any other type will result in `nil` and an error log.
+    ///
+    /// - Warning: Ensure the provided data is valid SVG to prevent rendering issues.
+    ///
+    /// ## Example
+    /// ```swift
+    /// let svgObject = SnappThemingImageObject(data: svgData)
+    /// if let image = processor.process(svgObject, of: .svg) {
+    ///     imageView.image = image
+    /// }
+    /// ```
+    public func process(_ object: SnappThemingImageObject, of type: UTType) -> SnappThemingImage? {
         guard type == .svg else {
             os_log(.error, "Invalid type provided: %{public}@. Only .svg type is supported.", "\(type)")
             return nil
         }
 
-        return SnappThemingSVGSupportImageConverter(data: data).image
+        return converter.convert(object)
     }
 
     /// Initializes the `SnappThemingSVGSupportSVGProcessor`.
     ///
     /// This default initializer is used to create instances of the processor for processing SVG data.
-    public init() {}
+    public init() {
+        converter = SnappThemingSVGSupportImageConverter()
+    }
 }

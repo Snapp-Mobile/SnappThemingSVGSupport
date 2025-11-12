@@ -25,7 +25,6 @@ struct ParserTests {
 
         let declaration = try SnappThemingParser.parse(from: json)
         #expect(declaration.images.cache.count == 1)
-        let representation = try #require(declaration.images.cache["svgImage"]?.value)
-        #expect(representation.data != nil)
+        let _ = try #require(declaration.images.cache["svgImage"]?.value)
     }
 }
