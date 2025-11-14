@@ -1,7 +1,7 @@
 # ``SnappThemingSVGSupport``
 
 @Metadata {
-    @PageImage(purpose: icon, source:"logo")
+    @PageImage(purpose: icon, source:"logo_svg")
     @PageColor(gray)
 }
 
